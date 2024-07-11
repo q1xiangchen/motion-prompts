@@ -63,9 +63,9 @@
                     const layout = {
                         xaxis: {range: [-1.1, 1.1], fixedrange: true, tickmode: 'linear', dtick: 0.5},
                         yaxis: {range: [-0.1, 1.1], fixedrange: true, tickmode: 'linear', dtick: 0.25},
-                        margin: {t: 10, b: 20, l: 30, r: 10},
+                        margin: {t: 10, b: 20, l: 35, r: 10},
                     };
-                    Plotly.newPlot('plot', [trace], layout, {staticPlot: true});
+                    Plotly.react('plot', [trace], layout, {staticPlot: true});
                 }
 
                 mSlider.addEventListener('input', updatePlot);
@@ -76,99 +76,95 @@
         </div>
 
         <div id="attention_map"></div>
-    <script>
-        // Constants
-        const path = 'static/images/frame_diff.png';
-        const img = new Image();
-        img.src = path;
+        <script>
+            const path = 'static/images/frame_diff.png';
+            const img = new Image();
+            img.src = path;
 
-        let aspectRatioAttention = img.height / img.width;
-        img.width /= 20;
-        img.height = img.width * aspectRatioAttention;
-        const layout = {
-                scene: {
-                    aspectmode: 'manual',
-                    aspectratio: {x: aspectRatioAttention, y: 1, z: 0.618},
-                    xaxis: {visible: false},
-                    yaxis: {visible: false},
-                    camera: {eye: {x: 0, y: 0, z: 1.3}},
-                    dragmode: 'turntable',
-                },
-                margin: {t: 0, b: 0, l: 0, r: 0}
+            let aspectRatioAttention = img.height / img.width;
+            img.width /= 16;
+            img.height = img.width * aspectRatioAttention;
+            const layout = {
+                    scene: {
+                        aspectmode: 'manual',
+                        aspectratio: {x: aspectRatioAttention, y: 1, z: 0.618},
+                        xaxis: {visible: false},
+                        yaxis: {visible: false},
+                        camera: {eye: {x: 0, y: 0, z: 1.3}},
+                        dragmode: 'turntable',
+                    },
+                    margin: {t: 0, b: 0, l: 0, r: 0}
+                };
+
+            // initialize the image
+            img.onload = function() {
+                updateAttentionMap(img, layout);
             };
 
-        // Load and process the image
-        img.onload = function() {
-            // Initial plot
-            updateAttentionMap(img, layout);
-        };
+            function computeZData(imageData, m = 1.05, n = -2.67) {
+                const a_ = 5 / (0.45 * Math.abs(Math.tanh(m)) + 1e-1);
+                const b_ = 0.6 * Math.tanh(n);
+                const z_data = [];
+                const width = imageData.width;
+                const height = imageData.height;
 
-        function computeZData(imageData, m = 1.05, n = -2.67) {
-            const a_ = 5 / (0.45 * Math.abs(Math.tanh(m)) + 1e-1);
-            const b_ = 0.6 * Math.tanh(n);
-            const z_data = [];
-            const width = imageData.width;
-            const height = imageData.height;
-
-            for (let i = width; i > 0; i--) {
-                const col = [];
-                for (let j = height; j > 0 ; j--) {
-                    const k = (j * width + i) * 4;
-                    const r = imageData.data[k] / 255;
-                    const g = imageData.data[k + 1] / 255;
-                    const b = imageData.data[k + 2] / 255;
-                    var gray = 0.299 * r + 0.587 * g + 0.114 * b;
-                    gray = (gray - 0.5) * 2;
-                    gray = 1 / (1 + Math.exp(-a_*(gray-b_)));
-                    col.push(gray);
+                for (let i = width; i > 0; i--) {
+                    const col = [];
+                    for (let j = height; j > 0 ; j--) {
+                        const k = (j * width + i) * 4;
+                        const r = imageData.data[k] / 255;
+                        const g = imageData.data[k + 1] / 255;
+                        const b = imageData.data[k + 2] / 255;
+                        var gray = 0.299 * r + 0.587 * g + 0.114 * b;
+                        gray = (gray - 0.5) * 2;
+                        gray = 1 / (1 + Math.exp(-a_*(gray-b_)));
+                        col.push(gray);
+                    }
+                    z_data.push(col);
                 }
-                z_data.push(col);
+
+                return z_data;
             }
 
-            return z_data;
-        }
+            function updateAttentionMap(image, layout, m = 1.05, n = -2.67) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = image.width;
+                canvas.height = image.height;
+                ctx.drawImage(image, 0, 0, image.width, image.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-        function updateAttentionMap(image, layout, m = 1.05, n = -2.67) {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = image.width;
-            canvas.height = image.height;
-            ctx.drawImage(image, 0, 0, image.width, image.height);
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const trace = {
+                    z: computeZData(imageData, m, n),
+                    type: 'surface',
+                    colorscale: 'peach',
+                    cmin: -1.5,
+                    cmax: 1.5,
+                    lighting: {diffuse: 0.2},
+                    showscale: false,
+                };
+                Plotly.react('attention_map', [trace], layout, {displayModeBar: false});
+            }
 
-            const trace = {
-                z: computeZData(imageData, m, n),
-                type: 'surface',
-                colorscale: 'peach',
-                cmin: -1.5,
-                cmax: 1.5,
-                lighting: {diffuse: 0.2},
-                showscale: false,
-            };
-            Plotly.react('attention_map', [trace], layout, {displayModeBar: false});
-        }
+            function debounce(func, delay) {
+                let debounceTimer;
+                return function() {
+                    const context = this;
+                    const args = arguments;
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(() => func.apply(context, args), delay);
+                };
+            }
 
-        // Utility function to debounce another function
-        function debounce(func, delay) {
-            let debounceTimer;
-            return function() {
-                const context = this;
-                const args = arguments;
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(() => func.apply(context, args), delay);
-            };
-        }
+            // update the attention map when the sliders are moved
+            mSlider.addEventListener('input', debounce(function() {
+                updateAttentionMap(img, layout, parseFloat(mSlider.value), parseFloat(nSlider.value));
+            }, 10));
 
-        // Updated event listener with debouncing
-        mSlider.addEventListener('input', debounce(function() {
-            updateAttentionMap(img, layout, parseFloat(mSlider.value), parseFloat(nSlider.value));
-        }, 10));
-
-        nSlider.addEventListener('input', debounce(function() {
-            updateAttentionMap(img, layout, parseFloat(mSlider.value), parseFloat(nSlider.value));
-        }, 10));
-    </script>
-
+            nSlider.addEventListener('input', debounce(function() {
+                updateAttentionMap(img, layout, parseFloat(mSlider.value), parseFloat(nSlider.value));
+            }, 10));
+        </script>
 
         <div id="output_frame"></div>
         <script>
