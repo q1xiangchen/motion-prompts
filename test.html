@@ -67,22 +67,19 @@
                     };
                     Plotly.react('plot', [trace], layout, {staticPlot: true});
                 }
-
-                mSlider.addEventListener('input', updatePlot);
-                nSlider.addEventListener('input', updatePlot);
-
                 updatePlot();
             </script>
         </div>
 
         <div id="attention_map"></div>
         <script>
+            var globalZData;
             const path = 'static/images/frame_diff.png';
             const img = new Image();
             img.src = path;
 
             let aspectRatioAttention = img.height / img.width;
-            img.width /= 16;
+            img.width /= 8;
             img.height = img.width * aspectRatioAttention;
             const layout = {
                     scene: {
@@ -108,9 +105,9 @@
                 const width = imageData.width;
                 const height = imageData.height;
 
-                for (let i = width; i > 0; i--) {
+                for (let i = width-1; i >= 0; i--) {
                     const col = [];
-                    for (let j = height; j > 0 ; j--) {
+                    for (let j = height-1; j >= 0 ; j--) {
                         const k = (j * width + i) * 4;
                         const r = imageData.data[k] / 255;
                         const g = imageData.data[k + 1] / 255;
@@ -128,14 +125,15 @@
 
             function updateAttentionMap(image, layout, m = 1.05, n = -2.67) {
                 const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
+                const ctx = canvas.getContext('2d', {willReadFrequently: true});
                 canvas.width = image.width;
                 canvas.height = image.height;
                 ctx.drawImage(image, 0, 0, image.width, image.height);
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                globalZData = computeZData(imageData, m, n);
 
                 const trace = {
-                    z: computeZData(imageData, m, n),
+                    z: globalZData,
                     type: 'surface',
                     colorscale: 'peach',
                     cmin: -1.5,
@@ -155,96 +153,92 @@
                     debounceTimer = setTimeout(() => func.apply(context, args), delay);
                 };
             }
-
-            // update the attention map when the sliders are moved
-            mSlider.addEventListener('input', debounce(function() {
-                updateAttentionMap(img, layout, parseFloat(mSlider.value), parseFloat(nSlider.value));
-            }, 10));
-
-            nSlider.addEventListener('input', debounce(function() {
-                updateAttentionMap(img, layout, parseFloat(mSlider.value), parseFloat(nSlider.value));
-            }, 10));
         </script>
 
-        <div id="output_frame"></div>
-        <script>
-            // Initialize images
-            const output_path = 'static/images/frame_0.png';
-            const output_img = new Image();
-            output_img.src = output_path;
+        <div id="output_frame">
+            <canvas id="canvas_output"></canvas>
+            <script>
+                const output_canvas = document.getElementById('canvas_output');
+                const output_ctx = output_canvas.getContext('2d', {willReadFrequently: true});
+                const output_img = new Image();
 
-            const diff_path = 'static/images/frame_diff.png';
-            const diff_img = new Image();
-            diff_img.src = diff_path;
+                output_img.src = 'static/images/frame_0.png';
+                output_img.onload = () =>{
+                    let aspectRatioOutput = output_img.height / output_img.width;
+                    output_img.width /= 8;
+                    output_img.height = output_img.width * aspectRatioAttention;
+                    output_canvas.width = output_img.width;
+                    output_canvas.height = output_img.height;
+                    output_ctx.drawImage(output_img, 0, 0, output_canvas.width, output_canvas.height);
 
-            // Load and process images
-            output_img.onload = function() {
-                resizeImage(output_img);
-
-                diff_img.onload = function() {
-                    resizeImage(diff_img);
-
-                    processImages();
-                };
-            };
-
-            function resizeImage(img) {
-                var aspectRatio = img.width / img.height;
-                img.height /= 5;
-                img.width = img.height * aspectRatio;
-            }
-
-            function processImages() {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-
-                canvas.width = output_img.width;
-                canvas.height = output_img.height;
-
-                ctx.drawImage(output_img, 0, 0, canvas.width, canvas.height);
-                const output_imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const output_data = output_imageData.data;
-
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(diff_img, 0, 0, canvas.width, canvas.height);
-                const diff_imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                const diff_data = diff_imageData.data;
-
-                const a_ = 5 / (0.45 * Math.abs(Math.tanh(1.05)) + 1e-1);
-                const b_ = 0.6 * Math.tanh(-2.67);
-
-                for (let i = 0; i < output_data.length; i += 4) {
-                    let diff_gray = 0.299 * diff_data[i] + 0.587 * diff_data[i + 1] + 0.114 * diff_data[i + 2];
-                    diff_gray = (diff_gray - 128) * 2 / 255; // Normalized and shifted
-                    diff_gray = 1 / (1 + Math.exp(-a_ * (diff_gray - b_)));
-                    output_data[i] *= diff_gray;
-                    output_data[i + 1] *= diff_gray;
-                    output_data[i + 2] *= diff_gray;
+                    if (globalZData) {
+                        updateOutput(globalZData);
+                    }
                 }
 
-                ctx.putImageData(output_imageData, 0, 0);
+                function jetColorMap(value) {
+                    let fourValue = 4 * value;
+                    let red = Math.min(fourValue - 1.5, -fourValue + 4.5);
+                    let green = Math.min(fourValue - 0.5, -fourValue + 3.5);
+                    let blue = Math.min(fourValue + 0.5, -fourValue + 2.5);
+                    return [
+                        Math.max(0, Math.min(1, red)) * 255,
+                        Math.max(0, Math.min(1, green)) * 255,
+                        Math.max(0, Math.min(1, blue)) * 255
+                    ];
+                }
 
-                const output_trace = {
-                    x: Array.from({length: canvas.width}, (_, i) => i),
-                    y: Array.from({length: canvas.height}, (_, i) => i),
-                    z: Array.from({length: canvas.height}, (_, i) => 
-                    output_data.slice(i * canvas.width * 4, (i + 1) * canvas.width * 4)
-                                .filter((_, j) => j % 4 !== 3) // Remove alpha channel
-                                .map(v => v / 255)), // Normalize
-                    type: 'heatmap',
-                    colorscale: 'gray',
-                    showscale: false
-                };
+                function updateOutput(zData) {
+                    output_ctx.drawImage(output_img, 0, 0, output_canvas.width, output_canvas.height);
+                    const imageData = output_ctx.getImageData(0, 0, output_canvas.width, output_canvas.height);
+                    const data = imageData.data;
 
-                const output_layout = {
-                    xaxis: {visible: false},
-                    yaxis: {visible: false},
-                    margin: {t: 0, b: 0, l: 0, r: 0}
-                };
+                    for (let x = 0; x < output_canvas.width; x++) {
+                        for (let y = 0; y < output_canvas.height; y++) {
+                            const index = (y * output_canvas.width + x) * 4;
+                            const zValue = zData[output_canvas.width-1-x][output_canvas.height-1-y]; 
+                            const color = jetColorMap(zValue);
+                            const weight = 0.3;
+                            
 
-                Plotly.newPlot('output_frame', [output_trace], output_layout, {staticPlot: true});
-            }
-        </script>
+                            data[index] = weight * color[0] + (1 - weight) * data[index] * zValue; // Red
+                            data[index + 1] = weight * color[1] + (1 - weight) * data[index + 1] * zValue; // Green
+                            data[index + 2] = weight * color[2] + (1 - weight) * data[index + 2] * zValue; // Blue
+                        }
+                    }
+                    output_ctx.putImageData(imageData, 0, 0);
+                }
+
+                mSlider.addEventListener('input', debounce(function() {
+                    mValue.textContent = mSlider.value;
+                    updateAll();
+                }, 10));
+
+                nSlider.addEventListener('input', debounce(function() {
+                    nValue.textContent = nSlider.value;
+                    updateAll(); 
+                }, 10));
+
+                mSlider.addEventListener('dblclick', function() {
+                    mSlider.value = 1.05; 
+                    mValue.textContent = mSlider.value;
+                    updateAll(); 
+                });
+
+                nSlider.addEventListener('dblclick', function() {
+                    nSlider.value = -2.67;
+                    nValue.textContent = nSlider.value;
+                    updateAll(); 
+                });
+
+                function updateAll() {
+                    updatePlot();
+                    updateAttentionMap(img, layout, parseFloat(mSlider.value), parseFloat(nSlider.value));
+                    updateOutput(globalZData);
+                    console.log('Updated values:', mSlider.value, nSlider.value);
+                }
+            </script>
+        </div>
     </div>
 </body>
 </html>
