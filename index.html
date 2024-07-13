@@ -56,6 +56,8 @@
     <script src="static/js/bulma-carousel.min.js"></script>
     <script src="static/js/bulma-slider.min.js"></script>
     <script src="static/js/index.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
   <body>
     <section class="hero">
@@ -136,7 +138,7 @@
                   </span>
 
                   <!-- Supplementary PDF link -->
-                  <span class="link-block">
+                  <!-- <span class="link-block">
                     <a
                       href="static/pdfs/supplementary_material.pdf"
                       target="_blank"
@@ -147,7 +149,7 @@
                       </span>
                       <span>Supplementary</span>
                     </a>
-                  </span>
+                  </span> -->
 
                   <!-- Github link -->
                   <span class="link-block">
@@ -170,33 +172,21 @@
       </div>
     </section>
 
-    <!-- Teaser video-->
-    <!-- <section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <source src="static/videos/banner_video.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
-      </h2>
-    </div>
-  </div>
-</section> -->
-    <!-- End teaser video -->
+    <!-- m&n figures -->
+    <hr style="border-top: 1px dashed #ff7300;margin-top: -5px;">
+    <iframe src="/m&n_FineGym.html" width="100%" height=350px></iframe>
+    <p style="text-align: right; font-size: small; color: #ff7300;">
+      *double click to reset the values; drag to rotate.
+    </p>
+    <hr style="border-top: 1px dashed #ff7300; margin-top: -1px;">
+    <iframe src="/m&n_MPII.html" width="100%" height=350px" ></iframe>
+    <hr style="border-top: 1px dashed #ff7300;">
+    <iframe src="/m&n_UCF.html" width="100%" height=350px></iframe>
+    <hr style="border-top: 1px dashed #ff7300;">
+    <iframe src="/m&n_HMDB.html" width="100%" height=350px></iframe>
+    <hr style="border-top: 1px dashed #ff7300; margin-bottom: 50px;">
+    <!-- m & n figures end -->
 
-    <!-- Figure 1 -->
-    <!-- <section class="hero teaser">
-      <div class="container is-max-desktop">
-        <div class="hero-body">
-          <h2 class="subtitle has-text-centered">Figure 1</h2>
-        </div>
-      </div>
-    </section> -->
-    <!-- Figure 1 -->
-    <!-- <h2 class="subtitle has-text-centered">Figure 1</h2> -->
-    <iframe src="/FineGym_m&n.html" width="100%" height=400px style="margin-bottom: 50px;"></iframe>
 
     <!-- Paper abstract -->
     <section class="hero teaser">
@@ -242,44 +232,32 @@
     </section>
     <!-- End paper abstract -->
 
-    <!-- Image carousel -->
-    <!-- <section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item"> -->
-    <!-- Your image here -->
-    <!-- <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-            First image description.
-          </h2>
-        </div>
-        <div class="item"> -->
-    <!-- Your image here -->
-    <!-- <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-            Second image description.
-          </h2>
-        </div>
-        <div class="item"> -->
-    <!-- Your image here -->
-    <!-- <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-          Third image description.
-        </h2>
-        </div>
-        <div class="item"> -->
-    <!-- Your image here -->
-    <!-- <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
-          <h2 class="subtitle has-text-centered">
-            Fourth image description.
-          </h2>
+    <!-- pipelie figure  -->
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+              <h2 class="title is-3">Pipeline</h2>
+              <figure class="image">
+                <img
+                  src="static/images/pipeline.jpg"
+                  alt="Pipeline"
+                  style="max-width: 100%;"
+                />
+              </figure> 
+              <div class="content has-text-justified">
+                <br>
+                <p>Overview of the motion prompt layer. Learnable Power Normalization (PN) function \( f(\cdot) \) modulates motion, influencing how motion is enhanced or dampened in each frame differencing map \( \mathbf{D} \) to highlight relevant movements. The resulting attention maps are multiplied element-wise (\(\odot\)) with the original video frame to produce video motion prompts. We introduce a temporal attention variation regularization term for smoother attention maps, ensuring better motion prompts. This layer can be inserted between the video input and backbones such as TimeSformer, serving as an adapter. Training involves optimizing both the motion prompt layer and the backbone network using a generic loss function, e.g., cross-entropy, along with the new regularization term.</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section> -->
-    <!-- End image carousel -->
+    </section>
+
+    <hr style="border-top: 1px dashed #ff7300;margin-top: -5px;">
+    <iframe src="/lambda_FineGym.html" width="100%" height=330px></iframe>
+    <hr style="border-top: 1px dashed #ff7300;">
 
 
     <!-- Youtube video -->
@@ -300,36 +278,6 @@
 </section> -->
     <!-- End youtube video -->
 
-    <!-- Video carousel -->
-    <!-- <section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Another Carousel</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <video poster="" id="video1" autoplay controls muted loop height="100%">
-            <source src="static/videos/carousel1.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video2">
-          <video poster="" id="video2" autoplay controls muted loop height="100%">
-            <source src="static/videos/carousel2.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video3">
-          <video poster="" id="video3" autoplay controls muted loop height="100%">\
-            <source src="static/videos/carousel3.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-    <!-- End video carousel -->
-
     <!-- Paper poster -->
     <!-- <section class="hero is-small is-light">
   <div class="hero-body">
@@ -348,7 +296,12 @@
     <section class="section" id="BibTeX">
       <div class="container is-max-desktop content">
         <h2 class="title">BibTeX</h2>
-        <pre><code>BibTex Code Here</code></pre>
+        <pre><code>@article{chen2024motion,
+          title={Motion meets Attention: Video Motion Prompts},
+          author={Chen, Qixiang and Wang, Lei and Koniusz, Piotr and Gedeon, Tom},
+          journal={arXiv preprint arXiv:2407.03179},
+          year={2024}
+        }</code></pre>
       </div>
     </section>
     <!--End BibTex citation -->
