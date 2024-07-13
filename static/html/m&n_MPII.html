@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="static/css/index.css" />
+    <link rel="stylesheet" href="../css/index.css" />
     <style>
       body {
         display: flex;
@@ -33,7 +33,7 @@
               id="m"
               min="-5"
               max="5"
-              value="1.05"
+              value="0.257"
               step="0.01"
             />
             <label for="n">n = <span id="n-value">1</span></label>
@@ -42,7 +42,7 @@
               id="n"
               min="-5"
               max="5"
-              value="-2.67"
+              value="0.053"
               step="0.01"
             />
           </div>
@@ -104,7 +104,7 @@
             our PN function
         </p>
         <p style="position: absolute; top: -50px; text-align:left; width: 100%; font-weight: bold; font-size: large;">
-          FineGym: <span style="font-style: italic">balance beam</span>
+          MPII Cooking 2: <span style="font-style: italic">Whip</span>
         </p>
       </div>
 
@@ -117,7 +117,7 @@
 
       <script>
         var globalZData;
-        const path = "static/images/FineGym_diff.png";
+        const path = "../images/MPII_diff.png";
         const img = new Image();
         img.src = path;
         var layout = {}
@@ -168,7 +168,7 @@
           return z_data;
         }
 
-        function updateAttentionMap(image, layout, m = 1.05, n = -2.67) {
+        function updateAttentionMap(image, layout, m = 0.257, n = 0.053) {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d", { willReadFrequently: true });
           canvas.width = image.width;
@@ -214,7 +214,7 @@
           });
           const output_img = new Image();
 
-          output_img.src = "static/images/FineGym.png";
+          output_img.src = "../images/MPII.png";
           output_img.onload = () => {
             let aspectRatioOutput = output_img.height / output_img.width;
             output_canvas.width = output_img.width;
@@ -268,7 +268,7 @@
                     output_canvas.height - 1 - y
                   ];
                 const color = jetColorMap(zValue);
-                const weight = 0.3;
+                const weight = 0.2;
 
                 data[index] =
                   weight * color[0] + (1 - weight) * data[index] * zValue; // Red
@@ -298,13 +298,13 @@
           );
 
           mSlider.addEventListener("dblclick", function () {
-            mSlider.value = 1.05;
+            mSlider.value = 0.257;
             mValue.textContent = mSlider.value;
             updateAll();
           });
 
           nSlider.addEventListener("dblclick", function () {
-            nSlider.value = -2.67;
+            nSlider.value = 0.053;
             nValue.textContent = nSlider.value;
             updateAll();
           });

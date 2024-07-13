@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="static/css/index.css" />
+    <link rel="stylesheet" href="../css/index.css" />
     <style>
       body {
         display: flex;
@@ -27,51 +27,39 @@
       <div style="position: relative; margin-left: 28px" class="flex">
         <div class="plot_1">
           <div class="controls">
-            <label for="lambda">lambda = <span id="lambda-value">0.0</span></label>
-            <label for="m&n">m = <span id="m-value">1.69</span>, n = <span id="n-value">-0.26</span></label>
+            <label for="m">m = <span id="m-value">1</span></label>
             <input
-                type="range"
-                id="lambda"
-                min="0"
-                max="8"
-                value="0"
-                step="1"
-                oninput="updateLambdaValue()"
+              type="range"
+              id="m"
+              min="-5"
+              max="5"
+              value="0.2646"
+              step="0.01"
             />
-        </div>
-        
-        <script>
-          const lambda_maps = {
-            0.0: [1.69, -0.26],
-            0.1: [1.80, -0.26],
-            0.5: [0.86, -2.13],
-            1.0: [1.02, -2.32],
-            1.5: [1.10, -2.45],
-            2.0: [1.01, -2.60],
-            2.5: [1.06, -2.67],
-            5.0: [1.30, -2.94],
-            10.0: [1.28, -3.27]
-            }
-          const lambdaValues = [0.0, 0.1, 0.5, 1.0, 1.5, 2.0, 2.5, 5.0, 10.0];
-          const lSlider = document.getElementById("lambda");
-          const lValue = document.getElementById("lambda-value");
-          const mValue = document.getElementById("m-value");
-          const nValue = document.getElementById("n-value");
-      
-          function updateLambdaValue() {
-              const lambdaValue = lambdaValues[lSlider.value];
-              lValue.textContent = lambdaValue;
-              const [m, n] = lambda_maps[lambdaValue];
-              mValue.textContent = m.toFixed(2);
-              nValue.textContent = n.toFixed(2);
-          }
-        </script>
-        
+            <label for="n">n = <span id="n-value">1</span></label>
+            <input
+              type="range"
+              id="n"
+              min="-5"
+              max="5"
+              value="-0.6615"
+              step="0.01"
+            />
+          </div>
           <div id="plot"></div>
+
           <script>
+            const mSlider = document.getElementById("m");
+            const nSlider = document.getElementById("n");
+            const mValue = document.getElementById("m-value");
+            const nValue = document.getElementById("n-value");
+
             function updatePlot() {
-              var l = parseFloat(lSlider.value);
-              var [m, n] = lambda_maps[lambdaValues[l]];
+              const m = parseFloat(mSlider.value);
+              const n = parseFloat(nSlider.value);
+
+              mValue.textContent = m;
+              nValue.textContent = n;
 
               const xValues = [];
               const yValues = [];
@@ -116,20 +104,20 @@
             our PN function
         </p>
         <p style="position: absolute; top: -50px; text-align:left; width: 100%; font-weight: bold; font-size: large;">
-          FineGym: <span style="font-style: italic">uneven bar</span>
+          HMDB-51: <span style="font-style: italic">Drink</span>
         </p>
       </div>
 
       <div style="position: relative">
         <div id="attention_map"></div>
-        <p style="position: absolute; bottom: -59px; text-align: center; width: 100%">
+        <p style="position: absolute; bottom: -67px; text-align: center; width: 100%">
             attention map
         </p>
       </div>
 
       <script>
         var globalZData;
-        const path = "static/images/FineGym_l_diff.png";
+        const path = "../images/HMDB_diff.png";
         const img = new Image();
         img.src = path;
         var layout = {}
@@ -180,7 +168,7 @@
           return z_data;
         }
 
-        function updateAttentionMap(image, layout, m = 1.05, n = -2.67) {
+        function updateAttentionMap(image, layout, m = 0.2646, n = -0.6615) {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d", { willReadFrequently: true });
           canvas.width = image.width;
@@ -216,7 +204,7 @@
 
       <div id="output_frame">
         <canvas id="canvas_output"></canvas>
-        <p class="caption" style="position: absolute; bottom: -34px; text-align: center; width: 100%;">
+        <p class="caption" style="position: absolute; bottom: -42px; text-align: center; width: 100%;">
             motion prompt
         </p>
         <script>
@@ -226,7 +214,7 @@
           });
           const output_img = new Image();
 
-          output_img.src = "static/images/FineGym_l.png";
+          output_img.src = "../images/HMDB.png";
           output_img.onload = () => {
             let aspectRatioOutput = output_img.height / output_img.width;
             output_canvas.width = output_img.width;
@@ -293,27 +281,41 @@
             output_ctx.putImageData(imageData, 0, 0);
           }
 
-          lSlider.addEventListener(
+          mSlider.addEventListener(
             "input",
             debounce(function () {
+              mValue.textContent = mSlider.value;
               updateAll();
             }, 10)
           );
 
-          // lSlider.addEventListener("dblclick", function () {
-          //   lSlider.value = 5;
-          //   lValue.textContent = lambdaValues[5];
-          //   updateAll();
-          // });
+          nSlider.addEventListener(
+            "input",
+            debounce(function () {
+              nValue.textContent = nSlider.value;
+              updateAll();
+            }, 10)
+          );
+
+          mSlider.addEventListener("dblclick", function () {
+            mSlider.value = 0.2646;
+            mValue.textContent = mSlider.value;
+            updateAll();
+          });
+
+          nSlider.addEventListener("dblclick", function () {
+            nSlider.value = -0.6615;
+            nValue.textContent = nSlider.value;
+            updateAll();
+          });
 
           function updateAll() {
             updatePlot();
-            var [m, n] = lambda_maps[lambdaValues[lSlider.value]];
             updateAttentionMap(
               img,
               layout,
-              m,
-              n
+              parseFloat(mSlider.value),
+              parseFloat(nSlider.value)
             );
             updateOutput(globalZData);
           }

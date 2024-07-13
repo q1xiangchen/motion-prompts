@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="static/css/index.css" />
+    <link rel="stylesheet" href="../css/index.css" />
     <style>
       body {
         display: flex;
@@ -117,7 +117,7 @@
 
       <script>
         var globalZData;
-        const path = "static/images/UCF_diff.png";
+        const path = "../images/UCF_diff.png";
         const img = new Image();
         img.src = path;
         var layout = {}
@@ -214,7 +214,7 @@
           });
           const output_img = new Image();
 
-          output_img.src = "static/images/UCF.png";
+          output_img.src = "../images/UCF.png";
           output_img.onload = () => {
             let aspectRatioOutput = output_img.height / output_img.width;
             output_canvas.width = output_img.width;
