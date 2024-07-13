@@ -1,135 +1,177 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-  <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="DESCRIPTION META TAG">
-  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
-  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
-  <meta property="og:url" content="URL OF THE WEBSITE"/>
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/image/your_banner_image.png" />
-  <meta property="og:image:width" content="1200"/>
-  <meta property="og:image:height" content="630"/>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+    <!-- Replace the content tag with appropriate information -->
+    <meta name="description" content="DESCRIPTION META TAG" />
+    <meta property="og:title" content="SOCIAL MEDIA TITLE TAG" />
+    <meta
+      property="og:description"
+      content="SOCIAL MEDIA DESCRIPTION TAG TAG"
+    />
+    <meta property="og:url" content="URL OF THE WEBSITE" />
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+    <meta property="og:image" content="static/image/your_banner_image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
+    <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG" />
+    <meta
+      name="twitter:description"
+      content="TWITTER BANNER DESCRIPTION META TAG"
+    />
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+    <meta
+      name="twitter:image"
+      content="static/images/your_twitter_banner_image.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Keywords for your paper to be indexed by-->
+    <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
-  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- Keywords for your paper to be indexed by-->
-  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Motion meets Attention: Video Motion Prompts</title>
+    <link rel="icon" type="image/x-icon" href="static/images/up.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet"
+    />
 
+    <link rel="stylesheet" href="static/css/bulma.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+    />
+    <link rel="stylesheet" href="static/css/index.css" />
 
-  <title>Motion meets Attention: Video Motion Prompts</title>
-  <link rel="icon" type="image/x-icon" href="static/images/up.ico">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-  rel="stylesheet">
-
-  <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="static/css/index.css">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src='https://cdn.plot.ly/plotly-2.32.0.min.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script src="static/js/bulma-carousel.min.js"></script>
-  <script src="static/js/bulma-slider.min.js"></script>
-  <script src="static/js/index.js"></script>
-</head>
-<body>
-
-
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">Motion meets Attention:<br> Video Motion Prompts</h1>
-
-            <div class="is-size-4 publication-authors">
-              <!-- Paper authors -->
-              <span class="author-block">
-                <a href="https://q1xiangchen.github.io/" target="_blank">Qixiang Chen</a><sup>1</sup>,</span>&nbsp;&nbsp;&nbsp;
-              <span class="author-block">
-                <a href="https://leiwangr.github.io/" target="_blank">Lei Wang</a><sup>1,2</sup>,</span>&nbsp;&nbsp;&nbsp;
-              <span class="author-block">
-                <a href="https://users.cecs.anu.edu.au/~koniusz/#" target="_blank">Piotr Koniusz</a><sup>2</sup>,</span>&nbsp;&nbsp;&nbsp;
-              <span class="author-block">
-                <a href="https://users.cecs.anu.edu.au/~Tom.Gedeon/" target="_blank">Tom Gedeon</a><sup>3</sup></span>
-            </div>
-
-            <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1</sup>Australian National University</span>&nbsp;&nbsp;&nbsp;
-              <span class="author-block"><sup>2</sup>Data61/CSIRO</span>&nbsp;&nbsp;&nbsp;
-              <span class="author-block"><sup>3</sup>Curtin University</span>
-              <!-- <span class="author-block">Institution Name<br>Conferance name and year</span> -->
-              <!-- <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
-            </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-body" style="margin-bottom: -30px;">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
             <div class="column has-text-centered">
-              <div class="publication-links">
-                <!-- Arxiv PDF link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/pdf/2407.03179.pdf" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                  </a>
-                </span>
-                <!-- ArXiv abstract Link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/2407.03179" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                  </a>
-                </span>
+              <h1 class="title is-1 publication-title">
+                Motion meets Attention:<br />
+                Video Motion Prompts
+              </h1>
 
-                <!-- Supplementary PDF link -->
-                <span class="link-block">
-                  <a href="static/pdfs/supplementary_material.pdf" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Supplementary</span>
-                  </a>
-                </span>
+              <div class="is-size-4 publication-authors">
+                <!-- Paper authors -->
+                <span class="author-block">
+                  <a href="https://q1xiangchen.github.io/" target="_blank"
+                    >Qixiang Chen</a
+                  ><sup>1</sup>,</span
+                >&nbsp;&nbsp;&nbsp;
+                <span class="author-block">
+                  <a href="https://leiwangr.github.io/" target="_blank"
+                    >Lei Wang</a
+                  ><sup>1,2</sup>,</span
+                >&nbsp;&nbsp;&nbsp;
+                <span class="author-block">
+                  <a
+                    href="https://users.cecs.anu.edu.au/~koniusz/#"
+                    target="_blank"
+                    >Piotr Koniusz</a
+                  ><sup>2</sup>,</span
+                >&nbsp;&nbsp;&nbsp;
+                <span class="author-block">
+                  <a
+                    href="https://users.cecs.anu.edu.au/~Tom.Gedeon/"
+                    target="_blank"
+                    >Tom Gedeon</a
+                  ><sup>3</sup></span
+                >
+              </div>
 
-                <!-- Github link -->
-                <span class="link-block">
-                  <a href="https://github.com/YOUR REPO HERE" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="fab fa-github"></i>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"
+                  ><sup>1</sup>Australian National University</span
+                >&nbsp;&nbsp;&nbsp;
+                <span class="author-block"><sup>2</sup>Data61/CSIRO</span
+                >&nbsp;&nbsp;&nbsp;
+                <span class="author-block"><sup>3</sup>Curtin University</span>
+                <!-- <span class="author-block">Institution Name<br>Conferance name and year</span> -->
+                <!-- <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
+              </div>
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- Arxiv PDF link -->
+                  <span class="link-block">
+                    <a
+                      href="https://arxiv.org/pdf/2407.03179.pdf"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
                   </span>
-                  <span>Code (Coming soon)</span>
-                  </a>
-                </span>
+                  <!-- ArXiv abstract Link -->
+                  <span class="link-block">
+                    <a
+                      href="https://arxiv.org/abs/2407.03179"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+
+                  <!-- Supplementary PDF link -->
+                  <span class="link-block">
+                    <a
+                      href="static/pdfs/supplementary_material.pdf"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span>
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a
+                      href="https://github.com/YOUR REPO HERE"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code (Coming soon)</span>
+                    </a>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-
-<!-- Teaser video-->
-<!-- <section class="hero teaser">
+    <!-- Teaser video-->
+    <!-- <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
       <video poster="" id="tree" autoplay controls muted loop height="100%">
@@ -142,68 +184,93 @@
     </div>
   </div>
 </section> -->
-<!-- End teaser video -->
+    <!-- End teaser video -->
 
-<!-- Figure 1 -->
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- Figure 1 Here -->
-      <h2 class="subtitle has-text-centered">
-        Figure 1
-      </h2>
-    </div>
-  </div>
-</section>
-<!-- Figure 1 -->
-
-<!-- Paper abstract -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Videos contain rich spatio-temporal information. Traditional methods for extracting motion, used in tasks such as action recognition, often rely on visual contents rather than precise motion features. This phenomenon is referred to as 'blind motion extraction' behavior, which proves inefficient in capturing motions of interest due to a lack of motion-guided cues. <br><br>Recently, attention mechanisms have enhanced many computer vision tasks by effectively highlighting salient visual areas. Inspired by this, we propose using a modified Sigmoid function with learnable slope and shift parameters as an attention mechanism to activate and modulate motion signals derived from frame differencing maps. This approach generates a sequence of attention maps that enhance the processing of motion-related video content. To ensure temporally continuity and smoothness of the attention maps, we apply pair-wise temporal attention variation regularization to remove unwanted motions (e.g., noise) while preserving important ones. We then perform Hadamard product between each pair of attention maps and the original video frames to highlight the evolving motions of interest over time. These highlighted motions, termed video motion prompts, are subsequently used as inputs to the model instead of the original video frames. We formalize this process as a motion prompt layer and incorporate the regularization term into the loss function to learn better motion prompts. <br><br>This layer serves as an adapter between the model and the video data, bridging the gap between traditional 'blind motion extraction' and the extraction of relevant motions of interest.
-          </p>
+    <!-- Figure 1 -->
+    <!-- <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="hero-body">
+          <h2 class="subtitle has-text-centered">Figure 1</h2>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-<!-- End paper abstract -->
+    </section> -->
+    <!-- Figure 1 -->
+    <!-- <h2 class="subtitle has-text-centered">Figure 1</h2> -->
+    <iframe src="/FineGym_m&n.html" width="100%" height=400px style="margin-bottom: 50px;"></iframe>
 
+    <!-- Paper abstract -->
+    <section class="hero teaser">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Videos contain rich spatio-temporal information. Traditional
+                methods for extracting motion, used in tasks such as action
+                recognition, often rely on visual contents rather than precise
+                motion features. This phenomenon is referred to as 'blind motion
+                extraction' behavior, which proves inefficient in capturing
+                motions of interest due to a lack of motion-guided cues.
+                <br /><br />Recently, attention mechanisms have enhanced many
+                computer vision tasks by effectively highlighting salient visual
+                areas. Inspired by this, we propose using a modified Sigmoid
+                function with learnable slope and shift parameters as an
+                attention mechanism to activate and modulate motion signals
+                derived from frame differencing maps. This approach generates a
+                sequence of attention maps that enhance the processing of
+                motion-related video content. To ensure temporally continuity
+                and smoothness of the attention maps, we apply pair-wise
+                temporal attention variation regularization to remove unwanted
+                motions (e.g., noise) while preserving important ones. We then
+                perform Hadamard product between each pair of attention maps and
+                the original video frames to highlight the evolving motions of
+                interest over time. These highlighted motions, termed video
+                motion prompts, are subsequently used as inputs to the model
+                instead of the original video frames. We formalize this process
+                as a motion prompt layer and incorporate the regularization term
+                into the loss function to learn better motion prompts.
+                <br /><br />This layer serves as an adapter between the model
+                and the video data, bridging the gap between traditional 'blind
+                motion extraction' and the extraction of relevant motions of
+                interest.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End paper abstract -->
 
-<!-- Image carousel -->
-<section class="hero is-small">
+    <!-- Image carousel -->
+    <!-- <section class="hero is-small">
   <div class="hero-body">
     <div class="container">
       <div id="results-carousel" class="carousel results-carousel">
-        <div class="item">
-          <!-- Your image here -->
-          <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
+        <div class="item"> -->
+    <!-- Your image here -->
+    <!-- <img src="static/images/carousel1.jpg" alt="MY ALT TEXT"/>
           <h2 class="subtitle has-text-centered">
             First image description.
           </h2>
         </div>
-        <div class="item">
-          <!-- Your image here -->
-          <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
+        <div class="item"> -->
+    <!-- Your image here -->
+    <!-- <img src="static/images/carousel2.jpg" alt="MY ALT TEXT"/>
           <h2 class="subtitle has-text-centered">
             Second image description.
           </h2>
         </div>
-        <div class="item">
-          <!-- Your image here -->
-          <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
+        <div class="item"> -->
+    <!-- Your image here -->
+    <!-- <img src="static/images/carousel3.jpg" alt="MY ALT TEXT"/>
           <h2 class="subtitle has-text-centered">
           Third image description.
         </h2>
         </div>
-        <div class="item">
-          <!-- Your image here -->
-          <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
+        <div class="item"> -->
+    <!-- Your image here -->
+    <!-- <img src="static/images/carousel4.jpg" alt="MY ALT TEXT"/>
           <h2 class="subtitle has-text-centered">
             Fourth image description.
           </h2>
@@ -211,14 +278,12 @@
       </div>
     </div>
   </div>
-</section>
-<!-- End image carousel -->
+</section> -->
+    <!-- End image carousel -->
 
 
-
-
-<!-- Youtube video -->
-<!-- <section class="hero is-small is-light">
+    <!-- Youtube video -->
+    <!-- <section class="hero is-small is-light">
   <div class="hero-body">
     <div class="container">
       <h2 class="title is-3">Video Presentation</h2>
@@ -233,11 +298,10 @@
     </div>
   </div>
 </section> -->
-<!-- End youtube video -->
+    <!-- End youtube video -->
 
-
-<!-- Video carousel -->
-<!-- <section class="hero is-small">
+    <!-- Video carousel -->
+    <!-- <section class="hero is-small">
   <div class="hero-body">
     <div class="container">
       <h2 class="title is-3">Another Carousel</h2>
@@ -264,12 +328,10 @@
     </div>
   </div>
 </section> -->
-<!-- End video carousel -->
+    <!-- End video carousel -->
 
-
-
-<!-- Paper poster -->
-<!-- <section class="hero is-small is-light">
+    <!-- Paper poster -->
+    <!-- <section class="hero is-small is-light">
   <div class="hero-body">
     <div class="container">
       <h2 class="title">Poster</h2>
@@ -280,40 +342,54 @@
       </div>
     </div>
   </section> -->
-<!--End paper poster -->
+    <!--End paper poster -->
 
+    <!--BibTex citation -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>BibTex Code Here</code></pre>
+      </div>
+    </section>
+    <!--End BibTex citation -->
 
-<!--BibTex citation -->
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <h2 class="title">BibTeX</h2>
-      <pre><code>BibTex Code Here</code></pre>
-    </div>
-</section>
-<!--End BibTex citation -->
-
-
-  <footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-            You are free to borrow the of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This page was built using the
+                <a
+                  href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                  target="_blank"
+                  >Academic Project Page Template</a
+                >
+                which was adopted from the <a
+                  href="https://nerfies.github.io"
+                  target="_blank"
+                  >Nerfies</a
+                > project page. You are free to borrow the of this website, we
+                just ask that you link back to this page in the footer. <br />
+                This website is licensed under a
+                <a
+                  rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/"
+                  target="_blank"
+                  >Creative Commons Attribution-ShareAlike 4.0 International
+                  License</a
+                >.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</footer>
+    </footer>
 
-<!-- Statcounter tracking code -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+    <!-- Statcounter tracking code -->
 
-<!-- End of Statcounter Code -->
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
 
-</body>
+    <!-- End of Statcounter Code -->
+  </body>
 </html>
