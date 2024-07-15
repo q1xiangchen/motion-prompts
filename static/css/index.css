@@ -215,6 +215,11 @@ body {
   margin-bottom: 10px;
 }
 
+.demo-image {
+  width: 24.8%; /* slightly less than one-fourth to accommodate margin */
+  height: auto;
+}
+
 .slidecontainer {
   width: 60%;
 }

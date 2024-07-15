@@ -6,10 +6,6 @@
     <title>Plot</title>
     <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="../css/index.css" />
     <style>
       body {
@@ -24,16 +20,39 @@
   <body>
     <div class="continues">
       <div class="continues_demo" id="imageContainer">
-        <img src="../images/continues/frame_0.png" style="width: 24.8%; height: auto;"/>
-        <img src="../images/continues/diff_0.png" style="width: 24.8%; height: auto;"/>
-        <img src="../images/continues/attention_0.png" style="width: 24.8%; height: auto;"/>
-        <img src="../images/continues/output_0.png" style="width: 24.8%; height: auto;"/>
+        <img src="../images/continues/frame_0.png" class="demo-image"/>
+        <img src="../images/continues/diff_0.png" class="demo-image"/>
+        <img src="../images/continues/attention_0.png" class="demo-image"/>
+        <img src="../images/continues/output_0.png" class="demo-image"/>
       </div>
       <div class="slidecontainer">
         <input type="range" min="0" max="9" value="0" class="slider" id="myRange">
       </div>
     </div>
 
-    <script src="../js/continues_frames.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          var slider = document.getElementById('myRange');
+          var images = document.querySelectorAll('.demo-image');
+          const img_prefix = {1:"../images/continues/frame_",
+              2:"../images/continues/diff_",
+              3:"../images/continues/attention_",
+              4:"../images/continues/output_",
+          }
+
+          function updateImages() {
+              images.forEach(function(img, index) {
+                  var path = img_prefix[index+1] + slider.value + ".png";
+                  img.src = path;
+              });
+          }
+
+          // Update images when the slider value changes
+          slider.addEventListener('input', updateImages);
+
+          // Initial update
+          updateImages();
+      });
+    </script>
   </body>
 </html>
