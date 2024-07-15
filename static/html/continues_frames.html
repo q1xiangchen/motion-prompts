@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plot</title>
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        height: 100vh;
+        font-family: "Noto Sans", sans-serif;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="continues">
+      <div class="continues_demo" id="imageContainer">
+        <img src="../images/continues/frame_0.png" class="demo-image"/>
+        <img src="../images/continues/diff_0.png" class="demo-image"/>
+        <img src="../images/continues/attention_0.png" class="demo-image"/>
+        <img src="../images/continues/output_0.png" class="demo-image"/>
+      </div>
+      <div class="slidecontainer">
+        <input type="range" min="0" max="9" value="0" class="slider" id="myRange">
+      </div>
+    </div>
+
+    <script src="../js/continues_frames.js"></script>
+  </body>
+</html>
