@@ -212,7 +212,7 @@ body {
   padding: 5px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .demo-image {
@@ -221,7 +221,7 @@ body {
 }
 
 .slidecontainer {
-  width: 60%;
+  width: 55%;
 }
 
 .slider {

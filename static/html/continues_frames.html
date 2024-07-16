@@ -20,10 +20,22 @@
   <body>
     <div class="continues">
       <div class="continues_demo" id="imageContainer">
-        <img src="../images/continues/frame_0.png" class="demo-image"/>
-        <img src="../images/continues/diff_0.png" class="demo-image"/>
-        <img src="../images/continues/attention_0.png" class="demo-image"/>
-        <img src="../images/continues/output_0.png" class="demo-image"/>
+        <div class="continues">
+          <img src="../images/continues/frame_0.png" class="demo-image" style="width: 100%;;"/>
+          <p style="position: relative;font-size: 16pt;margin: 10pt;">original frame</p>
+        </div>
+        <div class="continues">
+          <img src="../images/continues/diff_0.png" class="demo-image" style="width: 100%;;"/>
+          <p style="position: relative;font-size: 16pt;margin: 10pt;">frame differencing maps</p>
+        </div>
+        <div class="continues">
+          <img src="../images/continues/attention_0.png" class="demo-image" style="width: 100%;;"/>
+          <p style="position: relative;font-size: 16pt;margin: 10pt;">attention maps</p>
+        </div>
+        <div class="continues">
+          <img src="../images/continues/output_0.png" class="demo-image" style="width: 100%;;"/>
+          <p style="position: relative;font-size: 16pt;margin: 10pt;">motion prompts</p>
+        </div>
       </div>
       <div class="slidecontainer">
         <input type="range" min="0" max="9" value="0" class="slider" id="myRange">
