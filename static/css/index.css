@@ -2,29 +2,6 @@ body {
   font-family: "Noto Sans", sans-serif;
 }
 
-/* @media only screen and (max-width: 1024px){
-  body {
-    font-size: 18px;
-    width: 100%;
-  }
-}
-
-@media only screen and (max-width: 768px){
-  body {
-    font-size: 40px;
-    width: 1320px;
-  }
-}
-
-@media only screen and (max-width: 480px){
-  body {
-    font-size: 20px;
-    /* width: 1320px; */
-    /* width: 100%;
-  }
-} */ 
-
-
 .footer .icon-link {
   font-size: 25px;
   color: #000000;
@@ -157,10 +134,8 @@ body {
   padding-bottom: 18px;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: row;
-  /* width: 80%; */
-  /* height: 340px; */
+  height: 340px;
   background-color: white;
   margin: 0 auto;
 }
@@ -172,6 +147,7 @@ body {
   text-align: center;
   margin-left: 10px;
   margin-right: 15px;
+  margin-top: 15%;
 }
 
 .controls {
@@ -199,6 +175,7 @@ body {
   height: 250px;
   margin-left: 25px;
   margin-right: 25px;
+  margin-top: 15%;
 }
 #output_frame {
   width: 350px;
@@ -207,6 +184,7 @@ body {
   display: flex;
   margin-left: 15px;
   margin-right: 35px;
+  margin-top: 5.4%;
   position: relative;
 }
 
@@ -223,39 +201,68 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  font-size: 14pt;
+}
+
+.continues_styled {
+  height: 240px;
 }
 
 .continues_demo {
-  padding: 5px;
   display: flex;
-  justify-content: space-between;
 }
 
 .demo-image {
   width: 240px;
 }
 
-@media only screen and (max-width: 768px){
-  .demo-image {
-    width: 200px;
-  }
-}
-
-@media only screen and (max-width: 480px){
-  .continues_demo {
-    padding: 1px;
-    display: flex;
-    justify-content: space-between;
-    /* margin-bottom: 0px; */
-  }  
-  .demo-image {
-    width: 110px;
-  }
-}
-
 .slidecontainer {
   width: 55%;
 }
+
+@media only screen and (max-width: 920px){
+  .continues {
+    margin-bottom: -5px;
+    font-size: 14pt;
+  }
+  .continues_styled {
+    min-height: 65vw;
+  }
+  .continues_demo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }  
+  .demo-image {
+    width: 90%;
+  }
+  .slidecontainer {
+    margin-top: 5pt;
+    width: 65%;
+  }
+}
+
+@media only screen and (max-width: 750px){
+  .continues_styled {
+    min-height: 70vw;
+  }
+}
+
+@media only screen and (max-width: 610px){
+  .continues_styled {
+    min-height: 75vw;
+  }
+}
+
+@media only screen and (max-width: 468px){
+  .continues {
+    margin-bottom: -5px;
+    font-size: 12pt;
+  }
+  .continues_styled {
+    min-height: 80vw;
+  }
+}
+
 
 .slider {
   -webkit-appearance: none;
