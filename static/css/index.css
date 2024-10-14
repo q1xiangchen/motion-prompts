@@ -2,7 +2,7 @@ body {
   font-family: "Noto Sans", sans-serif;
 }
 
-@media only screen and (max-width: 1024px){
+/* @media only screen and (max-width: 1024px){
   body {
     font-size: 18px;
     width: 100%;
@@ -11,17 +11,18 @@ body {
 
 @media only screen and (max-width: 768px){
   body {
-    font-size: 18px;
+    font-size: 40px;
+    width: 1320px;
   }
 }
 
 @media only screen and (max-width: 480px){
   body {
-    font-size: 40px;
-    width: 1320px;
-    margin: auto;
+    font-size: 20px;
+    /* width: 1320px; */
+    /* width: 100%;
   }
-}
+} */ 
 
 
 .footer .icon-link {
