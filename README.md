@@ -1,4 +1,5 @@
 # Video Motion Prompts Project website
+The official project website of our paper "Motion meets Attention: Video Motion Prompts" (The 16th Asian Conference on Machine Learning)
 
 ## Acknowledgments
 Parts of this project page were adopted from the [Nerfies](https://nerfies.github.io/) page.
